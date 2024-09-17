@@ -91,7 +91,9 @@ public abstract class BaseService implements ApiService{
                 throw new ApiException(ErrorCode.OPERATION_ERROR, "不支持该请求");
             }
         }
-        return httpRequest.body(JSONUtil.toJsonStr(request.getRequestParams())).addHeaders(getHeaders(request));
+        return httpRequest.header("Content-Type", "application/json")
+                .addHeaders(getHeaders(request))
+                .body(JSONUtil.toJsonStr(request.getRequestParams()));
     }
 
     private Map<String, String> getHeaders(BaseRequest request) {
